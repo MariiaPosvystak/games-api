@@ -73,16 +73,6 @@ paths:
     get:
       tags:
         - details
-      parameters:
-        -
-          examples:
-            ID:
-              value: '1'
-          name: id
-          schema:
-            type: number
-          in: path
-          required: true
       responses:
         '200':
           content:
@@ -109,18 +99,15 @@ paths:
       summary: Get full details of a game
       description: Returns full details of a given id game
     delete:
+      requestBody:
+        description: Id of the game to be deleted
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/delete-game'
+        required: false
       tags:
         - delete-game
-      parameters:
-        -
-          examples:
-            Id:
-              value: '1'
-          name: id
-          schema:
-            type: number
-          in: path
-          required: true
       responses:
         '204':
           description: Game was deleted successfully
@@ -170,10 +157,11 @@ components:
     delete-game:
       title: Root Type for delete-game
       description: ''
+      required:
+        - id
       type: object
       properties:
         id:
-          format: int32
-          type: integer
+          type: string
       example:
-        id: 2
+        id: 1
