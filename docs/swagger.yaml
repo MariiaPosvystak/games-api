@@ -98,6 +98,63 @@ paths:
       operationId: id
       summary: Get full details of a game
       description: Returns full details of a given id game
+    put:
+      requestBody:
+        description: New data of the game
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/new-game'
+            examples:
+              Updated game:
+                value: |4-
+                      {
+                        "name": "Witcher 3 GOTY",
+                        "price": 19.99
+                      }
+        required: true
+      tags:
+        - update-game
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/new-game'
+              examples:
+                Update:
+                  value:
+                    id: 1
+                    name: Witcher 3 GOTY
+                    price: 19.99
+          description: Game was updated
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                error:
+                  value:
+                    error: One or all params are missing
+          description: One or all params are missing
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                error:
+                  value:
+                    error: Game not found
+          description: Game was not found in games array
+      summary: Updates a game
+      description: Updates the name and price of a game with the given id
     delete:
       requestBody:
         description: Id of the game to be deleted
@@ -122,11 +179,6 @@ paths:
           description: Game was not found in games array
       summary: Delete a game
       description: "\tDeletes a game with the given id"
-    parameters:
-      -
-        name: id
-        in: path
-        required: true
 components:
   schemas:
     error:

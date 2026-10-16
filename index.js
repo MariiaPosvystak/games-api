@@ -47,6 +47,18 @@ app.delete('/games/:id', (req, res) => {
     games.splice(req.params.id - 1, 1)
     res.status(204).send({ error: "No content" })
 })
+app.put('/games/:id', (req, res) => {
+    if (typeof games[req.params.id - 1] === 'undefined') {
+        return res.status(404).send({ error: "Game not found" })
+    }
+    if (req.body.name === undefined || req.body.price === undefined) {
+        return res.status(400).send({ error: 'One or all params are missing' })
+    }
+    games[req.params.id - 1].name = req.body.name
+    games[req.params.id - 1].price = req.body.price
+
+    res.status(200).send(games[req.params.id - 1])
+})
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 function getBaseUrl(req) {
