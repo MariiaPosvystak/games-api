@@ -16,6 +16,7 @@ const games = [
     { id: 7, name: "Valorant", price: 0 },
     { id: 8, name: "Forza Horizon 5", price: 59.99 }
 ]
+
 app.get('/games', (req, res) => {
     res.send(games)
 })
